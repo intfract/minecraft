@@ -10,6 +10,11 @@ import PlayerListOverlay from './PlayerListOverlay.js'
 import Keyboard from '../../../util/Keyboard.js'
 
 export default class IngameOverlay extends Gui {
+  /**
+   * creates an object for rendering the hotbar and inventory
+   * @param {Minecraft} minecraft the minecraft game
+   * @param {Window} window the browser window object
+   */
   constructor(minecraft, window) {
     super()
     this.minecraft = minecraft
@@ -20,6 +25,7 @@ export default class IngameOverlay extends Gui {
 
     this.textureCrosshair = minecraft.resources['gui/icons.png']
     this.textureHotbar = minecraft.resources['gui/gui.png']
+    this.textureHeart = minecraft.resources['gui/heart.png']
 
     this.ticksRendered = 0
   }
@@ -32,6 +38,9 @@ export default class IngameOverlay extends Gui {
 
     // Render hotbar
     this.renderHotbar(stack, this.window.width / 2 - 91, this.window.height - 22)
+
+    // Render health bar
+    this.renderHealth(stack, this.window.width / 2 - 91, this.window.height - 22 - 10)
 
     // Render chat
     this.chatOverlay.render(stack, mouseX, mouseY, partialTicks)
@@ -108,6 +117,14 @@ export default class IngameOverlay extends Gui {
         let block = Block.getById(typeId)
         this.minecraft.itemRenderer.renderItemInGui('hotbar', i, block, Math.floor(x + i * 20 + 11), y + 11, brightness)
       }
+    }
+  }
+
+  renderHealth(stack, x, y) {
+    const health = this.minecraft.player.health
+    const size = 9
+    for (let i = 0; i < Math.floor(health / 2); i++) {
+      this.drawSprite(stack, this.textureHeart, 0, 0, size, size, x + i * size, y, size, size)
     }
   }
 

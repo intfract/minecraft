@@ -46,6 +46,9 @@ export default class Minecraft {
     this.currentScreen = null
     this.loadingScreen = null
     this.world = null
+    /**
+     * @type {PlayerEntity | null}
+     */
     this.player = null
     this.playerController = null
     this.fps = 0

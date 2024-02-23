@@ -13,6 +13,7 @@ export default class PlayerEntity extends EntityLiving {
     super(minecraft, world, id)
 
     this.creative = false
+    this.health = 20
 
     this.inventory = new InventoryPlayer()
     this.username = 'Player'
