@@ -1,12 +1,15 @@
 import Block from '../Block.js'
 import EnumBlockFace from '../../../../util/EnumBlockFace.js'
 import BoundingBox from '../../../../util/BoundingBox.js'
+import Pickaxe from '../../tool/type/Pickaxe.js'
 
 export default class BlockSlab extends Block {
   constructor(id, textureSlotId) {
     super(id, textureSlotId)
 
     this.boundingBox = new BoundingBox(0.0, 0.0, 0.0, 1.0, 0.5, 1.0)
+
+    this.correctTool = Pickaxe
   }
 
   getTextureForFace(face) {

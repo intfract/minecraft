@@ -51,7 +51,7 @@ export default class Minecraft {
     this.fps = 0
     this.maxFps = 0
 
-    this.blockBreakTimer = 0
+    this.blockHitCount = 0
 
     // Tick timer
     this.timer = new Timer(20)
@@ -388,10 +388,11 @@ export default class Minecraft {
           if (typeId !== 0) {
             let selectedItemId = this.player.inventory.getItemInSelectedSlot()
             const itemInHand = Block.getById(selectedItemId)
-            let efficiency = itemInHand ? itemInHand.efficiency || 1 : 1
+            let efficiency = 1
+            if (itemInHand && itemInHand.tool && block.correctTool) efficiency = itemInHand.tool instanceof block.correctTool ? itemInHand.efficiency : 1
             let hitsRequired = block.hardness || 8
-            this.blockBreakTimer += efficiency
-            if (this.blockBreakTimer >= hitsRequired || this.player.creative) {
+            this.blockHitCount += efficiency
+            if (this.blockHitCount >= hitsRequired || this.player.creative) {
               let soundName = block.getSound().getBreakSound()
 
               // Play sound
@@ -402,7 +403,7 @@ export default class Minecraft {
 
               // Destroy block
               this.world.setBlockAt(hitResult.x, hitResult.y, hitResult.z, 0)
-              this.blockBreakTimer = 0
+              this.blockHitCount = 0
             }
           }
         }

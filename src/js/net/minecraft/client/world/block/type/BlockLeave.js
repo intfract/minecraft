@@ -6,6 +6,8 @@ export default class BlockLeave extends Block {
 
     // Sound
     this.sound = Block.sounds.dirt
+
+    this.hardness = 1
   }
 
   // TODO fix transparency of leaves
